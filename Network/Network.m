@@ -62,7 +62,7 @@ classdef Network <handle
                     err= err/m;
               
                 end
-                % training error 
+                %% training, val error  'tanh, -1/1' 
                 pre_tr_y = obj.predict(x_train);
                 train_accuracy(i) = sum(sign(pre_tr_y)==y_train)/numel(y_train);
                 

@@ -23,8 +23,7 @@ classdef FCLayer < Layer
         end
         
         function input_error = backward_propagation(obj,output_error, learning_rate)
-            disp(output_error);
-            disp(obj.weights);
+           
             input_error = output_error*obj.weights';
             weights_error = obj.input'*output_error;
             % dBias = output_error

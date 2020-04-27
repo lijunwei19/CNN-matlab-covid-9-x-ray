@@ -33,16 +33,18 @@ net.add(FCLayer(512, 1));
 net.add(ActLayer(@Tanh, @Tanh_prime));
 
 % train
-learning_rate= 0.0005;
-epochs = 40;
+learning_rate= 0.05;
+epochs = 20;
 
 net.use(@Mean_Squared_Loss, @Mean_Squared_Loss_prime);
-hisroty = net.fit(x_tr, y_tr, x_val, y_val, epochs, learning_rate);
+history = net.fit(x_tr, y_tr, x_val, y_val, epochs, learning_rate);
 
 %plot 
-plot(history(1,:))
+a = history(1,:);
+b = history(2,:);
+plot(a, 'y')
 hold on
-plot (history(2,:))
+plot (b, 'r')
 xlabel('epochs')
 ylabel('accuracy')
 
