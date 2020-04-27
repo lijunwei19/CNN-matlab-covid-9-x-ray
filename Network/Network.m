@@ -30,13 +30,13 @@ classdef Network <handle
                     layer = obj.layers{j};
                     output = layer.forward_propagation(output);      
                 end
-                result(i) = output;
+                result(i,:) = output;
             end
             return
         end
             
         %% Training the network
-        function history = fit(obj, x_train, y_train, epochs, learning_rate)
+        function history = fit(obj, x_train, y_train,x_val, y_val, epochs, learning_rate)
             m = size(x_train,1);
            
             for i= 1: epochs
@@ -62,10 +62,18 @@ classdef Network <handle
                     err= err/m;
               
                 end
-             
-                printString = ['epoch',num2str(i),'/',num2str(epochs),'--------------','error=',num2str(err)];
+                % training error 
+                pre_tr_y = obj.predict(x_train);
+                train_accuracy(i) = sum(sign(pre_tr_y)==y_train)/numel(y_train);
+                
+                pre_val_y = obj.predict(x_val);
+                val_accuracy(i) = sum(sign(pre_val_y)==y_val)/numel(y_val);
+               
+                printString = ['epoch',num2str(i),'/',num2str(epochs),'--------------','error:  ',num2str(err), '     train_accuracy:  ',num2str(train_accuracy(i)), '     val_accuracy:  ',num2str(val_accuracy(i)) ];
                 disp(printString)
             end
+            history(1,:)= val_accuracy(:);
+            history(2,:)= train_accuracy(:);
         end
 
                         
